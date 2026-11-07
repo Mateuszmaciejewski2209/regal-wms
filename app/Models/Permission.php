@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\Ability;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+#[Fillable(['key'])]
+class Permission extends Model
+{
+    public $timestamps = false;
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function ability(): ?Ability
+    {
+        return Ability::tryFrom($this->key);
+    }
+}

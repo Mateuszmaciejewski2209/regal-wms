@@ -1,0 +1,170 @@
+# Regał WMS – pełne środowisko w Dockerze.
+#
+#   docker compose up -d --build          → http://localhost:8000
+#   docker compose --profile tunnel up -d → dodatkowo publiczny adres HTTPS dla telefonu (kamera)
+#   docker compose --profile tools up -d  → Adminer (podgląd bazy) na http://localhost:8081
+#   docker compose --profile test run --rm tests     → testy PHPUnit (SQLite w pamięci)
+#   docker compose --profile test run --rm tests-pg  → testy PHPUnit na PostgreSQL (osobna baza regal_test)
+#
+# Zmienne (APP_KEY, REVERB_*) są czytane z pliku .env w katalogu projektu.
+
+name: regal-wms
+
+x-app: &app
+  image: regal-wms-app
+  env_file:
+    - path: .env
+      required: false
+  environment: &app-env
+    APP_NAME: "Regał WMS"
+    APP_ENV: ${DOCKER_APP_ENV:-production}
+    APP_DEBUG: ${DOCKER_APP_DEBUG:-false}
+    APP_KEY: ${APP_KEY:?Brak APP_KEY w pliku .env – zob. README, sekcja Docker}
+    APP_URL: http://localhost:${APP_PORT:-8000}
+    LOG_CHANNEL: stderr
+    LOG_LEVEL: info
+    DB_CONNECTION: pgsql
+    DB_HOST: db
+    DB_PORT: 5432
+    DB_DATABASE: regal
+    DB_USERNAME: regal
+    DB_PASSWORD: ${DOCKER_DB_PASSWORD:-regal}
+    SESSION_DRIVER: database
+    CACHE_STORE: database
+    QUEUE_CONNECTION: database
+    BROADCAST_CONNECTION: reverb
+    REVERB_APP_ID: ${REVERB_APP_ID:-100001}
+    REVERB_APP_KEY: ${REVERB_APP_KEY:-regal-key}
+    REVERB_APP_SECRET: ${REVERB_APP_SECRET:-regal-secret}
+    REVERB_HOST: reverb
+    REVERB_PORT: 8080
+    REVERB_SCHEME: http
+    REVERB_SERVER_HOST: 0.0.0.0
+    REVERB_SERVER_PORT: 8080
+    SEED_DEMO: ${SEED_DEMO:-true}
+    SCANNER_PUBLIC_URL: ${SCANNER_PUBLIC_URL:-}
+    TUNNEL_METRICS_URL: http://tunnel:2000/quicktunnel
+  restart: unless-stopped
+
+services:
+  # Jednorazowo: migracje + dane demonstracyjne (gdy baza jest pusta)
+  init:
+    <<: *app
+    build:
+      context: .
+      target: app
+      args:
+        VITE_REVERB_APP_KEY: ${REVERB_APP_KEY:-regal-key}
+    command: ["php", "artisan", "app:install"]
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # PHP-FPM – obsługa żądań HTTP przekazywanych przez nginx
+  app:
+    <<: *app
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  # WebSocket (Laravel Reverb) – aktualizacje na żywo w panelu
+  reverb:
+    <<: *app
+    command: ["php", "artisan", "reverb:start"]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  # Kolejka: doręczanie webhooków z ponawianiem
+  queue:
+    <<: *app
+    command: ["php", "artisan", "queue:work", "--tries=5", "--sleep=1", "--max-time=3600"]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  # nginx: jedyny port wystawiony na zewnątrz (HTTP + WebSocket)
+  web:
+    image: regal-wms-web
+    build:
+      context: .
+      target: web
+      args:
+        VITE_REVERB_APP_KEY: ${REVERB_APP_KEY:-regal-key}
+    ports:
+      - "${APP_PORT:-8000}:80"
+    depends_on:
+      - app
+      - reverb
+    restart: unless-stopped
+
+  # PostgreSQL 17 – polskie sortowanie (ICU pl-PL) ustawiane przy tworzeniu klastra
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: regal
+      POSTGRES_USER: regal
+      POSTGRES_PASSWORD: ${DOCKER_DB_PASSWORD:-regal}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale-provider=icu --icu-locale=pl-PL"
+      TZ: Europe/Warsaw
+      PGTZ: Europe/Warsaw
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - "${DB_FORWARD_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U regal -d regal"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  # Opcjonalnie: tunel Cloudflare (adres https://….trycloudflare.com) – kamera w telefonie wymaga HTTPS
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: ["tunnel", "--no-autoupdate", "--metrics", "0.0.0.0:2000", "--url", "http://web:80"]
+    depends_on:
+      - web
+    profiles: ["tunnel"]
+    restart: unless-stopped
+
+  # Opcjonalnie: Adminer – podgląd bazy danych (system: PostgreSQL, serwer: db, użytkownik: regal)
+  adminer:
+    image: adminer:4
+    ports:
+      - "8081:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    profiles: ["tools"]
+    restart: unless-stopped
+
+  # Testy PHPUnit w kontenerze – nie wymagają PHP ani Composera na komputerze
+  tests: &tests
+    image: regal-wms-tests
+    build:
+      context: .
+      target: test
+    environment:
+      APP_KEY: ${APP_KEY:?Brak APP_KEY w pliku .env – zob. README, sekcja Docker}
+    profiles: ["test"]
+    restart: "no"
+
+  # Te same testy na PostgreSQL 17 (blokady wierszy, porównania tekstu); baza aplikacji pozostaje nietknięta
+  tests-pg:
+    <<: *tests
+    environment:
+      APP_KEY: ${APP_KEY:?Brak APP_KEY w pliku .env – zob. README, sekcja Docker}
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: regal_test
+      DB_USERNAME: regal
+      DB_PASSWORD: ${DOCKER_DB_PASSWORD:-regal}
+    command: ["sh", "-c", "php docker/tests/ensure-database.php && php artisan test"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pg-data:

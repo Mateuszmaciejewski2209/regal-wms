@@ -1,0 +1,24 @@
+{
+  "stamp": "20261107-220305",
+  "phpunit": {
+    "exitCode": 0,
+    "wallSeconds": 6.9,
+    "tool": "phpunit",
+    "result": "passed",
+    "tests": 46,
+    "passed": 46,
+    "assertions": 1758,
+    "duration_ms": 5789,
+    "log": "tests\\perf\\results\\m0-phpunit-20261107-220305.log"
+  },
+  "e2e": {
+    "exitCode": 0,
+    "wallSeconds": 45.9,
+    "passed": "15",
+    "failed": null,
+    "flaky": null,
+    "skipped": null,
+    "reportedDuration": "44.8s",
+    "log": "tests\\perf\\results\\m0-e2e-20261107-220305.log"
+  }
+}

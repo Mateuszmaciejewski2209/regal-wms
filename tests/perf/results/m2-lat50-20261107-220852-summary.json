@@ -1,0 +1,153 @@
+{
+  "stamp": "20261107-220852",
+  "tag": "lat50",
+  "base_url": "http://127.0.0.1:8000",
+  "emulated_latency_ms_on_phone": 50,
+  "live_draft_id": 45,
+  "clock_offsets_ms": {
+    "start": {
+      "phone": {
+        "offset": 0.988,
+        "rtt": 0.396
+      },
+      "panel": {
+        "offset": 0.784,
+        "rtt": 0.377
+      }
+    },
+    "after_scans": {
+      "phone": {
+        "offset": 1.066,
+        "rtt": 0.386
+      },
+      "panel": {
+        "offset": 0.735,
+        "rtt": 0.391
+      }
+    }
+  },
+  "scan_to_panel": {
+    "all": {
+      "n": 30,
+      "min": 102.9,
+      "median": 112.55,
+      "p95": 129.04,
+      "max": 133.3,
+      "mean": 114.47
+    },
+    "new_row": {
+      "n": 15,
+      "min": 102.9,
+      "median": 110,
+      "p95": 132.74,
+      "max": 133.3,
+      "mean": 113.56
+    },
+    "qty_change": {
+      "n": 15,
+      "min": 107.8,
+      "median": 114.8,
+      "p95": 124.59,
+      "max": 124.8,
+      "mean": 115.38
+    }
+  },
+  "scan_to_ws_event": {
+    "n": 30,
+    "min": 34.8,
+    "median": 38.75,
+    "p95": 47.27,
+    "max": 49,
+    "mean": 39.72
+  },
+  "ws_to_panel_dom": {
+    "n": 30,
+    "min": 64.2,
+    "median": 74.55,
+    "p95": 85.62,
+    "max": 94.3,
+    "mean": 74.75
+  },
+  "phone_rtt": {
+    "n": 30,
+    "min": 59.4,
+    "median": 61.1,
+    "p95": 76.67,
+    "max": 79.3,
+    "mean": 67.38
+  },
+  "missed": 0,
+  "approval_to_other_user_list": {
+    "n": 0
+  },
+  "approval_to_own_page": {
+    "n": 0
+  },
+  "approval_errors": 0,
+  "final_document": {
+    "status": "draft",
+    "number": null,
+    "items": [
+      {
+        "sku": "PERF-M2LAT50220852-001",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-002",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-003",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-004",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-005",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-006",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-007",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-008",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-009",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-010",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-011",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-012",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-013",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-014",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAT50220852-015",
+        "quantity": "2.000"
+      }
+    ]
+  }
+}

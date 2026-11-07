@@ -1,0 +1,199 @@
+{
+  "stamp": "20261107-220718",
+  "tag": "lan",
+  "base_url": "http://127.0.0.1:8000",
+  "emulated_latency_ms_on_phone": 0,
+  "live_draft_id": 29,
+  "clock_offsets_ms": {
+    "start": {
+      "phone": {
+        "offset": 0.271,
+        "rtt": 0.38
+      },
+      "panel": {
+        "offset": 0.229,
+        "rtt": 0.344
+      }
+    },
+    "after_scans": {
+      "phone": {
+        "offset": 0.225,
+        "rtt": 0.357
+      },
+      "panel": {
+        "offset": 0.296,
+        "rtt": 0.35
+      }
+    },
+    "list_start": {
+      "offset": 0.272,
+      "rtt": 0.373
+    },
+    "manager_start": {
+      "offset": 0.345,
+      "rtt": 0.344
+    },
+    "list_end": {
+      "offset": 0.26,
+      "rtt": 0.406
+    },
+    "manager_end": {
+      "offset": 0.211,
+      "rtt": 0.378
+    }
+  },
+  "scan_to_panel": {
+    "all": {
+      "n": 40,
+      "min": 107.14,
+      "median": 118.09,
+      "p95": 139.89,
+      "max": 148.64,
+      "mean": 121
+    },
+    "new_row": {
+      "n": 20,
+      "min": 107.14,
+      "median": 117.24,
+      "p95": 131.64,
+      "max": 148.64,
+      "mean": 118.6
+    },
+    "qty_change": {
+      "n": 20,
+      "min": 114.24,
+      "median": 119.74,
+      "p95": 139.89,
+      "max": 142.74,
+      "mean": 123.4
+    }
+  },
+  "scan_to_ws_event": {
+    "n": 40,
+    "min": 36.24,
+    "median": 39.59,
+    "p95": 45.15,
+    "max": 46.04,
+    "mean": 39.98
+  },
+  "ws_to_panel_dom": {
+    "n": 40,
+    "min": 67.1,
+    "median": 79,
+    "p95": 99.47,
+    "max": 106.5,
+    "mean": 81.02
+  },
+  "phone_rtt": {
+    "n": 40,
+    "min": 49.2,
+    "median": 53.65,
+    "p95": 59.41,
+    "max": 60,
+    "mean": 54.27
+  },
+  "missed": 0,
+  "approval_to_other_user_list": {
+    "n": 15,
+    "min": 122.57,
+    "median": 126.27,
+    "p95": 164.93,
+    "max": 168.57,
+    "mean": 132.56
+  },
+  "approval_to_own_page": {
+    "n": 15,
+    "min": 89.2,
+    "median": 91.2,
+    "p95": 103.06,
+    "max": 108.8,
+    "mean": 93.44
+  },
+  "approval_errors": 0,
+  "final_document": {
+    "status": "draft",
+    "number": null,
+    "items": [
+      {
+        "sku": "PERF-M2LAN220718-001",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-002",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-003",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-004",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-005",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-006",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-007",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-008",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-009",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-010",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-011",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-012",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-013",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-014",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-015",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-016",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-017",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-018",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-019",
+        "quantity": "2.000"
+      },
+      {
+        "sku": "PERF-M2LAN220718-020",
+        "quantity": "2.000"
+      }
+    ]
+  }
+}

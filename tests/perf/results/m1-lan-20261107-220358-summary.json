@@ -1,0 +1,653 @@
+{
+  "stamp": "20261107-220358",
+  "tag": "lan",
+  "base_url": "http://127.0.0.1:8000",
+  "emulated_latency_ms": 0,
+  "interval_ms": 300,
+  "draft_id": 27,
+  "add": {
+    "n": 200,
+    "min": 48.2,
+    "median": 51.6,
+    "p95": 55.94,
+    "max": 66,
+    "mean": 52.08,
+    "ttfb": {
+      "n": 200,
+      "min": 46.4,
+      "median": 49.75,
+      "p95": 54.02,
+      "max": 64.2,
+      "mean": 50.17
+    }
+  },
+  "lookup": {
+    "n": 100,
+    "min": 41.2,
+    "median": 43.55,
+    "p95": 49.6,
+    "max": 54.3,
+    "mean": 44.36,
+    "ttfb": {
+      "n": 100,
+      "min": 39.6,
+      "median": 41.8,
+      "p95": 47.01,
+      "max": 51.9,
+      "mean": 42.48
+    }
+  },
+  "ui_submit_to_result": {
+    "dom": {
+      "n": 50,
+      "min": 51.6,
+      "median": 54,
+      "p95": 60.71,
+      "max": 64.9,
+      "mean": 54.81
+    },
+    "frame": {
+      "n": 50,
+      "min": 53,
+      "median": 66.85,
+      "p95": 68.3,
+      "max": 68.8,
+      "mean": 65.89
+    }
+  },
+  "statuses": {
+    "200": 300
+  },
+  "results": {
+    "add:added": 200,
+    "lookup:found": 100
+  },
+  "ui_labels": {
+    "Dodano": 50
+  },
+  "errors": 0,
+  "new_connections": 0,
+  "over_1s": {
+    "api": 0,
+    "ui": 0
+  },
+  "final_document": {
+    "items": 20,
+    "total_quantity": 250
+  },
+  "expected_total_quantity": 250,
+  "docker_load_before": [
+    {
+      "name": "regal-wms-reverb-1",
+      "cpu": "0.03%",
+      "mem": "45.73MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-queue-1",
+      "cpu": "0.13%",
+      "mem": "39.98MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-app-1",
+      "cpu": "0.60%",
+      "mem": "61.19MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-web-1",
+      "cpu": "0.00%",
+      "mem": "17.21MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-db-1",
+      "cpu": "0.46%",
+      "mem": "57.14MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-elasticsearch",
+      "cpu": "0.23%",
+      "mem": "1.123GiB / 30.88GiB"
+    },
+    {
+      "name": "erp-kafka-ui",
+      "cpu": "0.07%",
+      "mem": "656.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-traefik",
+      "cpu": "0.25%",
+      "mem": "84.23MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-alloy",
+      "cpu": "0.40%",
+      "mem": "264.4MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-postgres",
+      "cpu": "2.63%",
+      "mem": "73.56MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-fluent-bit",
+      "cpu": "0.05%",
+      "mem": "28.83MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-zitadel-api",
+      "cpu": "0.48%",
+      "mem": "182.8MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-seaweedfs",
+      "cpu": "4.63%",
+      "mem": "205.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-kafka",
+      "cpu": "1.00%",
+      "mem": "942.7MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-distributed-worker",
+      "cpu": "0.12%",
+      "mem": "47.61MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-audit-relay",
+      "cpu": "0.06%",
+      "mem": "49.09MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-delivery-worker",
+      "cpu": "0.11%",
+      "mem": "49.18MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-worker",
+      "cpu": "0.12%",
+      "mem": "49.59MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications",
+      "cpu": "0.00%",
+      "mem": "80.04MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-grafana",
+      "cpu": "0.05%",
+      "mem": "116.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-zitadel-login",
+      "cpu": "0.32%",
+      "mem": "147.7MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-rabbitmq",
+      "cpu": "2.20%",
+      "mem": "184.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-prometheus",
+      "cpu": "0.00%",
+      "mem": "124.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-otel-collector",
+      "cpu": "0.17%",
+      "mem": "123.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-loki",
+      "cpu": "0.33%",
+      "mem": "188.8MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-catalog-worker",
+      "cpu": "0.05%",
+      "mem": "59.56MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-catalog",
+      "cpu": "12.03%",
+      "mem": "113.4MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-audit-relay",
+      "cpu": "0.06%",
+      "mem": "55.82MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-distributed-worker",
+      "cpu": "0.12%",
+      "mem": "54.4MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-worker",
+      "cpu": "0.12%",
+      "mem": "54.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-outbox-worker",
+      "cpu": "0.06%",
+      "mem": "85.94MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse",
+      "cpu": "0.00%",
+      "mem": "127.9MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-ocr",
+      "cpu": "0.00%",
+      "mem": "175.4MiB / 2GiB"
+    },
+    {
+      "name": "erp-procurement-distributed-worker",
+      "cpu": "0.09%",
+      "mem": "48.7MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-artifacts-outbox-worker",
+      "cpu": "0.06%",
+      "mem": "47.85MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-artifacts-worker",
+      "cpu": "0.11%",
+      "mem": "48.29MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-audit-relay",
+      "cpu": "0.06%",
+      "mem": "49.67MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-worker",
+      "cpu": "0.11%",
+      "mem": "48.12MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement",
+      "cpu": "0.00%",
+      "mem": "126.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-audit-kafka-consumer",
+      "cpu": "0.04%",
+      "mem": "45.71MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-audit-scheduler",
+      "cpu": "0.06%",
+      "mem": "94.65MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-audit",
+      "cpu": "0.00%",
+      "mem": "82.77MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-retention-worker",
+      "cpu": "0.11%",
+      "mem": "48.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-retention-outbox",
+      "cpu": "0.07%",
+      "mem": "55.75MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-distributed-worker",
+      "cpu": "0.12%",
+      "mem": "48.17MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-scheduler",
+      "cpu": "0.06%",
+      "mem": "61.67MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-worker",
+      "cpu": "0.13%",
+      "mem": "48.14MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation",
+      "cpu": "5.66%",
+      "mem": "105.8MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-centrifugo",
+      "cpu": "0.25%",
+      "mem": "78.67MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-centrifugo-redis",
+      "cpu": "2.31%",
+      "mem": "14.12MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-eventcatalog",
+      "cpu": "0.00%",
+      "mem": "16.18MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-tempo",
+      "cpu": "0.23%",
+      "mem": "124.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-buggregator",
+      "cpu": "0.02%",
+      "mem": "233.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-redis",
+      "cpu": "2.28%",
+      "mem": "8.766MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-zitadel-db",
+      "cpu": "0.15%",
+      "mem": "49.5MiB / 30.88GiB"
+    },
+    {
+      "name": "sql-kolega1",
+      "cpu": "1.03%",
+      "mem": "2.434GiB / 30.88GiB"
+    },
+    {
+      "name": "sql-kolega2",
+      "cpu": "0.94%",
+      "mem": "1.981GiB / 30.88GiB"
+    }
+  ],
+  "docker_load_after": [
+    {
+      "name": "regal-wms-reverb-1",
+      "cpu": "0.00%",
+      "mem": "45.73MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-queue-1",
+      "cpu": "0.13%",
+      "mem": "39.98MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-app-1",
+      "cpu": "0.00%",
+      "mem": "61.2MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-web-1",
+      "cpu": "0.00%",
+      "mem": "17.24MiB / 30.88GiB"
+    },
+    {
+      "name": "regal-wms-db-1",
+      "cpu": "0.23%",
+      "mem": "57.85MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-elasticsearch",
+      "cpu": "0.23%",
+      "mem": "1.123GiB / 30.88GiB"
+    },
+    {
+      "name": "erp-kafka-ui",
+      "cpu": "0.45%",
+      "mem": "656.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-traefik",
+      "cpu": "0.07%",
+      "mem": "87.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-alloy",
+      "cpu": "0.44%",
+      "mem": "264.5MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-postgres",
+      "cpu": "0.25%",
+      "mem": "73.52MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-fluent-bit",
+      "cpu": "0.02%",
+      "mem": "28.83MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-zitadel-api",
+      "cpu": "0.56%",
+      "mem": "182.8MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-seaweedfs",
+      "cpu": "5.17%",
+      "mem": "205.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-kafka",
+      "cpu": "1.20%",
+      "mem": "942.7MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-distributed-worker",
+      "cpu": "0.14%",
+      "mem": "47.61MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-audit-relay",
+      "cpu": "0.03%",
+      "mem": "49.09MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-delivery-worker",
+      "cpu": "0.09%",
+      "mem": "49.18MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications-worker",
+      "cpu": "0.10%",
+      "mem": "49.59MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-notifications",
+      "cpu": "0.00%",
+      "mem": "80.04MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-grafana",
+      "cpu": "0.06%",
+      "mem": "116.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-zitadel-login",
+      "cpu": "0.29%",
+      "mem": "147.6MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-rabbitmq",
+      "cpu": "80.94%",
+      "mem": "265.6MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-prometheus",
+      "cpu": "0.00%",
+      "mem": "119.5MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-otel-collector",
+      "cpu": "0.13%",
+      "mem": "123.8MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-loki",
+      "cpu": "0.32%",
+      "mem": "190.6MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-catalog-worker",
+      "cpu": "0.06%",
+      "mem": "59.56MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-catalog",
+      "cpu": "0.00%",
+      "mem": "112.9MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-audit-relay",
+      "cpu": "0.03%",
+      "mem": "55.82MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-distributed-worker",
+      "cpu": "0.10%",
+      "mem": "54.4MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-worker",
+      "cpu": "0.11%",
+      "mem": "54.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse-outbox-worker",
+      "cpu": "0.03%",
+      "mem": "85.94MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-warehouse",
+      "cpu": "0.00%",
+      "mem": "128MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-ocr",
+      "cpu": "0.00%",
+      "mem": "175.4MiB / 2GiB"
+    },
+    {
+      "name": "erp-procurement-distributed-worker",
+      "cpu": "0.13%",
+      "mem": "48.7MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-artifacts-outbox-worker",
+      "cpu": "0.03%",
+      "mem": "47.85MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-artifacts-worker",
+      "cpu": "0.10%",
+      "mem": "48.29MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-audit-relay",
+      "cpu": "0.03%",
+      "mem": "49.67MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement-worker",
+      "cpu": "0.14%",
+      "mem": "48.12MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-procurement",
+      "cpu": "0.00%",
+      "mem": "126.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-audit-kafka-consumer",
+      "cpu": "0.02%",
+      "mem": "45.71MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-audit-scheduler",
+      "cpu": "0.05%",
+      "mem": "94.65MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-audit",
+      "cpu": "0.00%",
+      "mem": "82.77MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-retention-worker",
+      "cpu": "0.11%",
+      "mem": "48.3MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-retention-outbox",
+      "cpu": "0.04%",
+      "mem": "55.75MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-distributed-worker",
+      "cpu": "0.10%",
+      "mem": "48.17MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-scheduler",
+      "cpu": "0.06%",
+      "mem": "61.68MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation-worker",
+      "cpu": "0.11%",
+      "mem": "48.14MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-foundation",
+      "cpu": "0.00%",
+      "mem": "105.8MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-centrifugo",
+      "cpu": "0.16%",
+      "mem": "76.99MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-centrifugo-redis",
+      "cpu": "0.29%",
+      "mem": "14.12MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-eventcatalog",
+      "cpu": "0.00%",
+      "mem": "16.19MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-tempo",
+      "cpu": "0.22%",
+      "mem": "124.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-buggregator",
+      "cpu": "0.01%",
+      "mem": "233.2MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-redis",
+      "cpu": "0.21%",
+      "mem": "8.746MiB / 30.88GiB"
+    },
+    {
+      "name": "erp-zitadel-db",
+      "cpu": "2.57%",
+      "mem": "50.19MiB / 30.88GiB"
+    },
+    {
+      "name": "sql-kolega1",
+      "cpu": "1.10%",
+      "mem": "2.434GiB / 30.88GiB"
+    },
+    {
+      "name": "sql-kolega2",
+      "cpu": "0.93%",
+      "mem": "1.981GiB / 30.88GiB"
+    }
+  ]
+}

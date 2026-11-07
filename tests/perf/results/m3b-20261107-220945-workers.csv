@@ -1,0 +1,11 @@
+run,document_id,pid,status,number,message,error_class,error_code,ready_before_go_ms,start_lag_ms,approve_ms,tx_ms,tx_end,queries,slowest_query_ms,slowest_query_sql
+1,152,262,rejected,,Dokument nie jest szkicem – nie można go zmieniać.,,,2851.062,0.164,24.577,23.983,rollback,1,22.94,"select * from ""documents"" where ""documents"".""id"" = ? limit 1 for update"
+1,152,263,approved,WZ/2026/11/0055,,,,2851.008,0.195,44.831,23.183,commit,24,2.03,"insert into ""stock_movements"" (""product_id"", ""warehouse_id"", ""document_id"", ""quantity"", ""unit_price"", ""balance_quantity"", ""balance_value"", ""is_reversal"", ""creat"
+2,154,264,approved,WZ/2026/11/0056,,,,2866.202,0.105,40.644,23.539,commit,24,1.87,"select * from ""products"" where ""products"".""id"" in (106)"
+2,154,265,rejected,,Dokument nie jest szkicem – nie można go zmieniać.,,,2865.881,0.039,24.83,24.377,rollback,1,23.32,"select * from ""documents"" where ""documents"".""id"" = ? limit 1 for update"
+3,156,266,rejected,,Dokument nie jest szkicem – nie można go zmieniać.,,,2864.215,0.034,24.693,24.204,rollback,1,22.84,"select * from ""documents"" where ""documents"".""id"" = ? limit 1 for update"
+3,156,267,approved,WZ/2026/11/0057,,,,2874.162,0.13,39.999,22.93,commit,24,1.97,"insert into ""stock_movements"" (""product_id"", ""warehouse_id"", ""document_id"", ""quantity"", ""unit_price"", ""balance_quantity"", ""balance_value"", ""is_reversal"", ""creat"
+4,158,268,rejected,,Dokument nie jest szkicem – nie można go zmieniać.,,,2848.17,0.057,23.866,23.393,rollback,1,22.27,"select * from ""documents"" where ""documents"".""id"" = ? limit 1 for update"
+4,158,269,approved,WZ/2026/11/0058,,,,2848.578,0.164,39.419,22.446,commit,24,1.57,"insert into ""stock_movements"" (""product_id"", ""warehouse_id"", ""document_id"", ""quantity"", ""unit_price"", ""balance_quantity"", ""balance_value"", ""is_reversal"", ""creat"
+5,160,270,rejected,,Dokument nie jest szkicem – nie można go zmieniać.,,,2873.824,0.16,25.964,25.43,rollback,1,24.24,"select * from ""documents"" where ""documents"".""id"" = ? limit 1 for update"
+5,160,271,approved,WZ/2026/11/0059,,,,2873.058,0.154,42.468,24.511,commit,24,1.56,"select * from ""document_items"" where ""document_items"".""document_id"" = ? and ""document_items"".""document_id"" is not null order by ""position"" asc, ""id"" asc"

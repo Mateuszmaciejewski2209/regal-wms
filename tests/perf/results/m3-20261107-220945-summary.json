@@ -1,0 +1,821 @@
+{
+  "stamp": "20261107-220945",
+  "a": {
+    "scenario": "a",
+    "runs": [
+      {
+        "run": 1,
+        "product_sku": "PERF-M3A-220946-R01",
+        "pz_number": "PZ/2026/11/0019",
+        "document_ids": [
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66
+        ],
+        "workers": 20,
+        "by_status": {
+          "approved": 10,
+          "rejected": 10
+        },
+        "messages_non_approved": {
+          "Niewystarczający stan towaru „PERF M3A 220946 przebieg 01” w magazynie MG1: dostępne 0 szt, wymagane 1 szt.": 10
+        },
+        "stock_final": {
+          "quantity": "0.000",
+          "value": "0.0000"
+        },
+        "movements": {
+          "count": 11,
+          "count_for_wz": 10,
+          "sum_quantity": "0.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 0,
+          "min_balance_value": 0,
+          "last_balance_value": "0.0000"
+        },
+        "documents": {
+          "approved_in_db": 10,
+          "draft_in_db": 10,
+          "numbers": [
+            "WZ/2026/11/0005",
+            "WZ/2026/11/0006",
+            "WZ/2026/11/0007",
+            "WZ/2026/11/0008",
+            "WZ/2026/11/0009",
+            "WZ/2026/11/0010",
+            "WZ/2026/11/0011",
+            "WZ/2026/11/0012",
+            "WZ/2026/11/0013",
+            "WZ/2026/11/0014"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 4,
+          "sequence_after": 14
+        },
+        "timing_ms": {
+          "start_spread": 0.349,
+          "wall_go_to_last_end": 187.915,
+          "min_ready_before_go": 2551.458,
+          "approve_approved": {
+            "n": 10,
+            "min": 50.41,
+            "median": 111.45,
+            "p95": 168.45,
+            "max": 175.05
+          },
+          "approve_rejected": {
+            "n": 10,
+            "min": 155.66,
+            "median": 172.32,
+            "p95": 186.17,
+            "max": 187.9
+          },
+          "slowest_query": {
+            "n": 20,
+            "min": 2.21,
+            "median": 118.44,
+            "p95": 151.8,
+            "max": 153.6
+          }
+        }
+      },
+      {
+        "run": 2,
+        "product_sku": "PERF-M3A-220946-R02",
+        "pz_number": "PZ/2026/11/0020",
+        "document_ids": [
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87
+        ],
+        "workers": 20,
+        "by_status": {
+          "approved": 10,
+          "rejected": 10
+        },
+        "messages_non_approved": {
+          "Niewystarczający stan towaru „PERF M3A 220946 przebieg 02” w magazynie MG1: dostępne 0 szt, wymagane 1 szt.": 10
+        },
+        "stock_final": {
+          "quantity": "0.000",
+          "value": "0.0000"
+        },
+        "movements": {
+          "count": 11,
+          "count_for_wz": 10,
+          "sum_quantity": "0.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 0,
+          "min_balance_value": 0,
+          "last_balance_value": "0.0000"
+        },
+        "documents": {
+          "approved_in_db": 10,
+          "draft_in_db": 10,
+          "numbers": [
+            "WZ/2026/11/0015",
+            "WZ/2026/11/0016",
+            "WZ/2026/11/0017",
+            "WZ/2026/11/0018",
+            "WZ/2026/11/0019",
+            "WZ/2026/11/0020",
+            "WZ/2026/11/0021",
+            "WZ/2026/11/0022",
+            "WZ/2026/11/0023",
+            "WZ/2026/11/0024"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 14,
+          "sequence_after": 24
+        },
+        "timing_ms": {
+          "start_spread": 0.381,
+          "wall_go_to_last_end": 154.556,
+          "min_ready_before_go": 2560.303,
+          "approve_approved": {
+            "n": 10,
+            "min": 43.15,
+            "median": 91.43,
+            "p95": 136.81,
+            "max": 142.93
+          },
+          "approve_rejected": {
+            "n": 10,
+            "min": 127.68,
+            "median": 141.12,
+            "p95": 153.13,
+            "max": 154.48
+          },
+          "slowest_query": {
+            "n": 20,
+            "min": 1.95,
+            "median": 101.32,
+            "p95": 124.8,
+            "max": 126.87
+          }
+        }
+      },
+      {
+        "run": 3,
+        "product_sku": "PERF-M3A-220946-R03",
+        "pz_number": "PZ/2026/11/0021",
+        "document_ids": [
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108
+        ],
+        "workers": 20,
+        "by_status": {
+          "approved": 10,
+          "rejected": 10
+        },
+        "messages_non_approved": {
+          "Niewystarczający stan towaru „PERF M3A 220946 przebieg 03” w magazynie MG1: dostępne 0 szt, wymagane 1 szt.": 10
+        },
+        "stock_final": {
+          "quantity": "0.000",
+          "value": "0.0000"
+        },
+        "movements": {
+          "count": 11,
+          "count_for_wz": 10,
+          "sum_quantity": "0.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 0,
+          "min_balance_value": 0,
+          "last_balance_value": "0.0000"
+        },
+        "documents": {
+          "approved_in_db": 10,
+          "draft_in_db": 10,
+          "numbers": [
+            "WZ/2026/11/0025",
+            "WZ/2026/11/0026",
+            "WZ/2026/11/0027",
+            "WZ/2026/11/0028",
+            "WZ/2026/11/0029",
+            "WZ/2026/11/0030",
+            "WZ/2026/11/0031",
+            "WZ/2026/11/0032",
+            "WZ/2026/11/0033",
+            "WZ/2026/11/0034"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 24,
+          "sequence_after": 34
+        },
+        "timing_ms": {
+          "start_spread": 0.364,
+          "wall_go_to_last_end": 178.827,
+          "min_ready_before_go": 2648.808,
+          "approve_approved": {
+            "n": 10,
+            "min": 49.69,
+            "median": 108.11,
+            "p95": 160.67,
+            "max": 166.82
+          },
+          "approve_rejected": {
+            "n": 10,
+            "min": 148.22,
+            "median": 163.29,
+            "p95": 176.95,
+            "max": 178.72
+          },
+          "slowest_query": {
+            "n": 20,
+            "min": 2.32,
+            "median": 115.04,
+            "p95": 142.8,
+            "max": 144.36
+          }
+        }
+      },
+      {
+        "run": 4,
+        "product_sku": "PERF-M3A-220946-R04",
+        "pz_number": "PZ/2026/11/0022",
+        "document_ids": [
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129
+        ],
+        "workers": 20,
+        "by_status": {
+          "approved": 10,
+          "rejected": 10
+        },
+        "messages_non_approved": {
+          "Niewystarczający stan towaru „PERF M3A 220946 przebieg 04” w magazynie MG1: dostępne 0 szt, wymagane 1 szt.": 10
+        },
+        "stock_final": {
+          "quantity": "0.000",
+          "value": "0.0000"
+        },
+        "movements": {
+          "count": 11,
+          "count_for_wz": 10,
+          "sum_quantity": "0.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 0,
+          "min_balance_value": 0,
+          "last_balance_value": "0.0000"
+        },
+        "documents": {
+          "approved_in_db": 10,
+          "draft_in_db": 10,
+          "numbers": [
+            "WZ/2026/11/0035",
+            "WZ/2026/11/0036",
+            "WZ/2026/11/0037",
+            "WZ/2026/11/0038",
+            "WZ/2026/11/0039",
+            "WZ/2026/11/0040",
+            "WZ/2026/11/0041",
+            "WZ/2026/11/0042",
+            "WZ/2026/11/0043",
+            "WZ/2026/11/0044"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 34,
+          "sequence_after": 44
+        },
+        "timing_ms": {
+          "start_spread": 0.301,
+          "wall_go_to_last_end": 161.279,
+          "min_ready_before_go": 2469.019,
+          "approve_approved": {
+            "n": 10,
+            "min": 46.76,
+            "median": 97.85,
+            "p95": 145.69,
+            "max": 151.43
+          },
+          "approve_rejected": {
+            "n": 10,
+            "min": 134.95,
+            "median": 148.08,
+            "p95": 159.71,
+            "max": 161.08
+          },
+          "slowest_query": {
+            "n": 20,
+            "min": 1.74,
+            "median": 106.62,
+            "p95": 129.56,
+            "max": 130.35
+          }
+        }
+      },
+      {
+        "run": 5,
+        "product_sku": "PERF-M3A-220946-R05",
+        "pz_number": "PZ/2026/11/0023",
+        "document_ids": [
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150
+        ],
+        "workers": 20,
+        "by_status": {
+          "approved": 10,
+          "rejected": 10
+        },
+        "messages_non_approved": {
+          "Niewystarczający stan towaru „PERF M3A 220946 przebieg 05” w magazynie MG1: dostępne 0 szt, wymagane 1 szt.": 10
+        },
+        "stock_final": {
+          "quantity": "0.000",
+          "value": "0.0000"
+        },
+        "movements": {
+          "count": 11,
+          "count_for_wz": 10,
+          "sum_quantity": "0.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 0,
+          "min_balance_value": 0,
+          "last_balance_value": "0.0000"
+        },
+        "documents": {
+          "approved_in_db": 10,
+          "draft_in_db": 10,
+          "numbers": [
+            "WZ/2026/11/0045",
+            "WZ/2026/11/0046",
+            "WZ/2026/11/0047",
+            "WZ/2026/11/0048",
+            "WZ/2026/11/0049",
+            "WZ/2026/11/0050",
+            "WZ/2026/11/0051",
+            "WZ/2026/11/0052",
+            "WZ/2026/11/0053",
+            "WZ/2026/11/0054"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 44,
+          "sequence_after": 54
+        },
+        "timing_ms": {
+          "start_spread": 0.32,
+          "wall_go_to_last_end": 159.291,
+          "min_ready_before_go": 2595.668,
+          "approve_approved": {
+            "n": 10,
+            "min": 44.23,
+            "median": 95.87,
+            "p95": 142.14,
+            "max": 148.37
+          },
+          "approve_rejected": {
+            "n": 10,
+            "min": 132.76,
+            "median": 146.1,
+            "p95": 157.73,
+            "max": 158.94
+          },
+          "slowest_query": {
+            "n": 20,
+            "min": 2,
+            "median": 105.54,
+            "p95": 131.5,
+            "max": 132.28
+          }
+        }
+      }
+    ],
+    "n": 20,
+    "s": "10",
+    "price": "12.34",
+    "db_driver": "pgsql"
+  },
+  "b": {
+    "scenario": "b",
+    "runs": [
+      {
+        "run": 1,
+        "product_sku": "PERF-M3B-221004-R01",
+        "pz_number": "PZ/2026/11/0024",
+        "document_ids": [
+          152
+        ],
+        "workers": 2,
+        "by_status": {
+          "rejected": 1,
+          "approved": 1
+        },
+        "messages_non_approved": {
+          "Dokument nie jest szkicem – nie można go zmieniać.": 1
+        },
+        "stock_final": {
+          "quantity": "9.000",
+          "value": "111.0600"
+        },
+        "movements": {
+          "count": 2,
+          "count_for_wz": 1,
+          "sum_quantity": "9.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 9,
+          "min_balance_value": 111.06,
+          "last_balance_value": "111.0600"
+        },
+        "documents": {
+          "approved_in_db": 1,
+          "draft_in_db": 0,
+          "numbers": [
+            "WZ/2026/11/0055"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 54,
+          "sequence_after": 55
+        },
+        "timing_ms": {
+          "start_spread": 0.031,
+          "wall_go_to_last_end": 45.026,
+          "min_ready_before_go": 2851.008,
+          "approve_approved": {
+            "n": 1,
+            "min": 44.83,
+            "median": 44.83,
+            "p95": 44.83,
+            "max": 44.83
+          },
+          "approve_rejected": {
+            "n": 1,
+            "min": 24.58,
+            "median": 24.58,
+            "p95": 24.58,
+            "max": 24.58
+          },
+          "slowest_query": {
+            "n": 2,
+            "min": 2.03,
+            "median": 12.49,
+            "p95": 21.89,
+            "max": 22.94
+          }
+        }
+      },
+      {
+        "run": 2,
+        "product_sku": "PERF-M3B-221004-R02",
+        "pz_number": "PZ/2026/11/0025",
+        "document_ids": [
+          154
+        ],
+        "workers": 2,
+        "by_status": {
+          "approved": 1,
+          "rejected": 1
+        },
+        "messages_non_approved": {
+          "Dokument nie jest szkicem – nie można go zmieniać.": 1
+        },
+        "stock_final": {
+          "quantity": "9.000",
+          "value": "111.0600"
+        },
+        "movements": {
+          "count": 2,
+          "count_for_wz": 1,
+          "sum_quantity": "9.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 9,
+          "min_balance_value": 111.06,
+          "last_balance_value": "111.0600"
+        },
+        "documents": {
+          "approved_in_db": 1,
+          "draft_in_db": 0,
+          "numbers": [
+            "WZ/2026/11/0056"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 55,
+          "sequence_after": 56
+        },
+        "timing_ms": {
+          "start_spread": 0.066,
+          "wall_go_to_last_end": 40.749,
+          "min_ready_before_go": 2865.881,
+          "approve_approved": {
+            "n": 1,
+            "min": 40.64,
+            "median": 40.64,
+            "p95": 40.64,
+            "max": 40.64
+          },
+          "approve_rejected": {
+            "n": 1,
+            "min": 24.83,
+            "median": 24.83,
+            "p95": 24.83,
+            "max": 24.83
+          },
+          "slowest_query": {
+            "n": 2,
+            "min": 1.87,
+            "median": 12.59,
+            "p95": 22.25,
+            "max": 23.32
+          }
+        }
+      },
+      {
+        "run": 3,
+        "product_sku": "PERF-M3B-221004-R03",
+        "pz_number": "PZ/2026/11/0026",
+        "document_ids": [
+          156
+        ],
+        "workers": 2,
+        "by_status": {
+          "rejected": 1,
+          "approved": 1
+        },
+        "messages_non_approved": {
+          "Dokument nie jest szkicem – nie można go zmieniać.": 1
+        },
+        "stock_final": {
+          "quantity": "9.000",
+          "value": "111.0600"
+        },
+        "movements": {
+          "count": 2,
+          "count_for_wz": 1,
+          "sum_quantity": "9.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 9,
+          "min_balance_value": 111.06,
+          "last_balance_value": "111.0600"
+        },
+        "documents": {
+          "approved_in_db": 1,
+          "draft_in_db": 0,
+          "numbers": [
+            "WZ/2026/11/0057"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 56,
+          "sequence_after": 57
+        },
+        "timing_ms": {
+          "start_spread": 0.096,
+          "wall_go_to_last_end": 40.129,
+          "min_ready_before_go": 2864.215,
+          "approve_approved": {
+            "n": 1,
+            "min": 40,
+            "median": 40,
+            "p95": 40,
+            "max": 40
+          },
+          "approve_rejected": {
+            "n": 1,
+            "min": 24.69,
+            "median": 24.69,
+            "p95": 24.69,
+            "max": 24.69
+          },
+          "slowest_query": {
+            "n": 2,
+            "min": 1.97,
+            "median": 12.41,
+            "p95": 21.8,
+            "max": 22.84
+          }
+        }
+      },
+      {
+        "run": 4,
+        "product_sku": "PERF-M3B-221004-R04",
+        "pz_number": "PZ/2026/11/0027",
+        "document_ids": [
+          158
+        ],
+        "workers": 2,
+        "by_status": {
+          "rejected": 1,
+          "approved": 1
+        },
+        "messages_non_approved": {
+          "Dokument nie jest szkicem – nie można go zmieniać.": 1
+        },
+        "stock_final": {
+          "quantity": "9.000",
+          "value": "111.0600"
+        },
+        "movements": {
+          "count": 2,
+          "count_for_wz": 1,
+          "sum_quantity": "9.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 9,
+          "min_balance_value": 111.06,
+          "last_balance_value": "111.0600"
+        },
+        "documents": {
+          "approved_in_db": 1,
+          "draft_in_db": 0,
+          "numbers": [
+            "WZ/2026/11/0058"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 57,
+          "sequence_after": 58
+        },
+        "timing_ms": {
+          "start_spread": 0.107,
+          "wall_go_to_last_end": 39.583,
+          "min_ready_before_go": 2848.17,
+          "approve_approved": {
+            "n": 1,
+            "min": 39.42,
+            "median": 39.42,
+            "p95": 39.42,
+            "max": 39.42
+          },
+          "approve_rejected": {
+            "n": 1,
+            "min": 23.87,
+            "median": 23.87,
+            "p95": 23.87,
+            "max": 23.87
+          },
+          "slowest_query": {
+            "n": 2,
+            "min": 1.57,
+            "median": 11.92,
+            "p95": 21.24,
+            "max": 22.27
+          }
+        }
+      },
+      {
+        "run": 5,
+        "product_sku": "PERF-M3B-221004-R05",
+        "pz_number": "PZ/2026/11/0028",
+        "document_ids": [
+          160
+        ],
+        "workers": 2,
+        "by_status": {
+          "rejected": 1,
+          "approved": 1
+        },
+        "messages_non_approved": {
+          "Dokument nie jest szkicem – nie można go zmieniać.": 1
+        },
+        "stock_final": {
+          "quantity": "9.000",
+          "value": "111.0600"
+        },
+        "movements": {
+          "count": 2,
+          "count_for_wz": 1,
+          "sum_quantity": "9.000",
+          "sum_equals_stock": true,
+          "min_balance_quantity": 9,
+          "min_balance_value": 111.06,
+          "last_balance_value": "111.0600"
+        },
+        "documents": {
+          "approved_in_db": 1,
+          "draft_in_db": 0,
+          "numbers": [
+            "WZ/2026/11/0059"
+          ],
+          "numbers_unique": true,
+          "numbers_consecutive_no_gaps": true,
+          "sequence_before": 58,
+          "sequence_after": 59
+        },
+        "timing_ms": {
+          "start_spread": 0.006,
+          "wall_go_to_last_end": 42.622,
+          "min_ready_before_go": 2873.058,
+          "approve_approved": {
+            "n": 1,
+            "min": 42.47,
+            "median": 42.47,
+            "p95": 42.47,
+            "max": 42.47
+          },
+          "approve_rejected": {
+            "n": 1,
+            "min": 25.96,
+            "median": 25.96,
+            "p95": 25.96,
+            "max": 25.96
+          },
+          "slowest_query": {
+            "n": 2,
+            "min": 1.56,
+            "median": 12.9,
+            "p95": 23.11,
+            "max": 24.24
+          }
+        }
+      }
+    ],
+    "n": 2,
+    "s": "10",
+    "price": "12.34",
+    "db_driver": "pgsql"
+  }
+}
