@@ -16,7 +16,8 @@
     @fonts
     @vite(['resources/css/app.css', 'resources/js/scanner.js'])
     <style>
-        #reader { position: absolute; inset: 0; }
+        /* Dolne 6rem zajmuje panel sterowania – dzięki temu środek obrazu pokrywa się ze środkiem celownika (pb-24). */
+        #reader { position: absolute; inset: 0 0 6rem 0; }
         #reader video { width: 100% !important; height: 100% !important; object-fit: cover; }
         #reader > div, #reader img { display: none !important; }
         .safe-top { padding-top: max(env(safe-area-inset-top), 0.75rem); }
@@ -27,6 +28,7 @@
         .reticle i:nth-child(2) { top: 0; right: 0; border-top-width: 3px; border-right-width: 3px; border-top-right-radius: 0.9rem; }
         .reticle i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 3px; border-left-width: 3px; border-bottom-left-radius: 0.9rem; }
         .reticle i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 3px; border-right-width: 3px; border-bottom-right-radius: 0.9rem; }
+        .reticle.armed i { border-color: #34D399; }
         .sheet { transition: transform 320ms var(--ease-drawer); }
         .tap { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     </style>
@@ -41,9 +43,11 @@
 
         {{-- Celownik --}}
         <div class="pointer-events-none absolute inset-0 grid place-items-center pb-24">
-            <div class="reticle relative transition-transform duration-150 ease-out" :class="flash && 'scale-[0.97]'">
+            <div class="reticle relative transition-transform duration-150 ease-out" :class="{ 'scale-[0.97]': flash, 'armed': armed }">
                 <i></i><i></i><i></i><i></i>
-                <div class="absolute inset-x-6 top-1/2 h-px -translate-y-1/2 bg-white/30" x-show="camera === 'running'"></div>
+                <div class="absolute inset-x-6 top-1/2 h-px -translate-y-1/2 transition-colors duration-150" :class="armed ? 'bg-[#34D399]' : 'bg-white/30'" x-show="camera === 'running'"></div>
+                <p class="absolute inset-x-0 top-full mt-3 text-center text-[0.8125rem] text-white/85 drop-shadow" x-show="screen === 'scan' && camera === 'running'"
+                   x-text="armed ? 'Szukam kodu w ramce…' : (missed ? 'Nie odczytano kodu. Wyceluj w ramkę i spróbuj ponownie.' : 'Wyceluj kod w ramkę i naciśnij „Skanuj”')"></p>
             </div>
         </div>
 
@@ -154,6 +158,7 @@
             <div class="fixed inset-x-0 bottom-0 z-20 space-y-3 px-3 safe-bottom">
                 {{-- Karta wyniku --}}
                 <div x-show="result" x-transition:enter="transition duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]" x-transition:enter-start="opacity-0 translate-y-2"
+                     x-on:click="if (! $event.target.closest('button, a')) dismissResult()" title="Dotknij, aby zamknąć"
                      class="max-h-[40dvh] overflow-y-auto rounded-2xl border bg-surface/95 p-3.5 backdrop-blur-md"
                      :class="{ 'border-[#34D399]/50': resultTone === 'ok', 'border-line': resultTone === 'info', 'border-[#F87171]/60': resultTone === 'bad', 'border-[#FBBF24]/50': resultTone === 'warn' }"
                      aria-live="polite">
@@ -187,7 +192,7 @@
                             <template x-if="result.result !== 'location'">
                                 <div>
                                     <p class="mt-2 text-base leading-snug font-semibold text-ink" x-text="result.product ? result.product.name : result.message"></p>
-                                    <p class="mt-0.5 text-[0.8125rem] text-ink-3" x-show="result.product" x-text="result.message"></p>
+                                    <p class="mt-0.5 text-[0.8125rem] text-ink-3" x-show="result.product && result.message !== result.product.name" x-text="result.message"></p>
                                     <div class="mt-2.5 flex flex-wrap gap-1.5" x-show="result.product && result.product.stocks.length">
                                         <template x-for="s in (result.product ? result.product.stocks : [])" :key="s.warehouse">
                                             <span class="wh-badge" :class="'wh-' + s.color"><span class="wh-dot"></span><span class="wh-code" x-text="s.warehouse"></span><span class="tabular-nums text-ink-2" x-text="s.formatted"></span></span>
@@ -246,6 +251,13 @@
                             <x-lucide-flashlight class="size-5" aria-hidden="true" />
                         </button>
                     </div>
+
+                    {{-- Spust: kod z ramki jest przyjmowany dopiero po naciśnięciu --}}
+                    <button type="button" class="mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-xl text-base font-semibold transition-colors duration-150 active:scale-[0.98] disabled:opacity-40"
+                            :class="armed ? 'bg-[#34D399] text-black' : 'bg-white text-black'" x-on:click="trigger()" :disabled="camera !== 'running'">
+                        <x-lucide-scan-line class="size-5" aria-hidden="true" />
+                        <span x-text="armed ? 'Szukam kodu…' : 'Skanuj'">Skanuj</span>
+                    </button>
                 </div>
             </div>
         </div>

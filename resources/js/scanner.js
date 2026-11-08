@@ -20,8 +20,9 @@ const STORAGE = {
     location: 'regal.scanner.location',
 };
 
-const SAME_CODE_COOLDOWN_MS = 1500; // ten sam kod – jak spust fizycznego skanera
-const ANY_CODE_COOLDOWN_MS = 450;
+const TRIGGER_WINDOW_MS = 2500; // po naciśnięciu „Skanuj” – czas na odczyt kodu z ramki
+const RESULT_HIDE_MS = 4000; // udany skan w trybie „Dodaj” lub „Rozmieść”
+const RESULT_HIDE_LONG_MS = 8000; // „Sprawdź” i błędy – więcej czasu na przeczytanie
 
 const read = (key, fallback) => {
     try {
@@ -74,8 +75,10 @@ window.scannerApp = () => ({
     secure: window.isSecureContext,
 
     reader: null,
-    lastCode: null,
-    lastAt: 0,
+    armed: false, // „Skanuj” naciśnięte – przyjmujemy pierwszy kod z ramki
+    armTimer: null,
+    missed: false,
+    resultTimer: null,
     audio: null,
     wakeLock: null,
     heartbeat: null,
@@ -98,6 +101,14 @@ window.scannerApp = () => ({
                 this.requestWakeLock();
                 this.refreshMe();
             }
+        });
+
+        // Karta wyniku znika sama: szybko po udanym skanie, wolniej przy podglądzie i błędach.
+        this.$watch('result', (result) => {
+            clearTimeout(this.resultTimer);
+            if (!result) return;
+            const quick = this.resultTone === 'ok' && this.mode !== 'lookup';
+            this.resultTimer = setTimeout(() => (this.result = null), quick ? RESULT_HIDE_MS : RESULT_HIDE_LONG_MS);
         });
 
         if (this.screen === 'scan') this.enterScanScreen();
@@ -281,7 +292,7 @@ window.scannerApp = () => ({
 
             await this.reader.start(
                 { facingMode: 'environment' },
-                { fps: 12, disableFlip: true },
+                { fps: 12, disableFlip: true, qrbox: (w, h) => this.scanRegion(w, h) },
                 (text) => onText(text),
                 () => {},
             );
@@ -311,6 +322,7 @@ window.scannerApp = () => ({
         }
         this.camera = 'idle';
         this.torchOn = false;
+        this.armed = false;
     },
 
     async toggleTorch() {
@@ -332,17 +344,56 @@ window.scannerApp = () => ({
 
     // ───────────────────────── Skan ─────────────────────────
 
+    /** Spust jak w czytniku ręcznym: kamera działa cały czas, ale kod przyjmujemy dopiero po naciśnięciu „Skanuj”. */
+    trigger() {
+        if (this.camera !== 'running' || this.sheet) return;
+        this.unlockAudio();
+        this.result = null;
+        this.missed = false;
+        this.armed = true;
+        clearTimeout(this.armTimer);
+        this.armTimer = setTimeout(() => {
+            if (!this.armed) return;
+            this.armed = false;
+            this.missed = true;
+            setTimeout(() => (this.missed = false), 2500);
+        }, TRIGGER_WINDOW_MS);
+    },
+
     onDecoded(raw) {
         const code = String(raw).trim();
-        const now = Date.now();
+        // Jedno naciśnięcie = jeden skan; kody poza ramką biblioteka w ogóle pomija (qrbox).
+        if (!code || !this.armed || this.sheet) return;
 
-        if (!code || this.sheet) return;
-        if (now - this.lastAt < ANY_CODE_COOLDOWN_MS) return;
-        if (code === this.lastCode && now - this.lastAt < SAME_CODE_COOLDOWN_MS) return;
-
-        this.lastCode = code;
-        this.lastAt = now;
+        this.armed = false;
+        clearTimeout(this.armTimer);
         this.submit(code);
+    },
+
+    dismissResult() {
+        this.result = null;
+    },
+
+    /**
+     * Obszar odczytu = ramka celownika na ekranie. Wideo ma object-fit: cover, a biblioteka przelicza obszar tak,
+     * jakby obraz był rozciągnięty na cały element, więc korygujemy wymiary o skalę przycięcia.
+     */
+    scanRegion(viewWidth, viewHeight) {
+        const box = document.querySelector('.reticle')?.getBoundingClientRect();
+        const video = document.querySelector('#reader video');
+        let width = box?.width || viewWidth * 0.72;
+        let height = box?.height || width / 1.45;
+
+        if (video?.videoWidth && video?.videoHeight) {
+            const scale = Math.max(viewWidth / video.videoWidth, viewHeight / video.videoHeight);
+            width = (width / scale) * (viewWidth / video.videoWidth);
+            height = (height / scale) * (viewHeight / video.videoHeight);
+        }
+
+        return {
+            width: Math.round(Math.min(viewWidth, Math.max(50, width))),
+            height: Math.round(Math.min(viewHeight, Math.max(50, height))),
+        };
     },
 
     submitManual() {

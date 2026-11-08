@@ -51,6 +51,8 @@ Po pomiarach: `node tests/perf/reset-db.mjs` – ta sama procedura co `tests/e2e
 
 ## Uwaga o limicie żądań
 
-`throttle:240,1` na trasach skanera liczy żądania per adres IP klienta (klucz `sha1('|<ip>')`), wspólnie z `throttle:10,1` parowania.
-Wszystkie żądania z hosta przychodzą przez bramkę Dockera, więc parowanie tuż po serii skanów dostaje `429 Too Many Attempts.` –
-`pairPhone()` ponawia wtedy próbę co 20 s.
+Podczas pomiarów limit `throttle:240,1` na trasach skanera był liczony per adres IP klienta, wspólnie z limitem parowania.
+Wszystkie żądania z hosta przychodzą przez bramkę Dockera, więc parowanie tuż po serii skanów dostawało `429 Too Many Attempts.`.
+Błąd poprawiono: limiter `scanner` liczy skany osobno dla każdego urządzenia, a parowanie ma własny limit dla adresu IP
+(`AppServiceProvider`, test `test_scan_requests_do_not_use_up_the_pairing_limit`). Ponawianie co 20 s w `pairPhone()`
+zostało jako zabezpieczenie.

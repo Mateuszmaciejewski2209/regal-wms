@@ -29,3 +29,5 @@ Thumbs.db
 /test-results
 /playwright-report
 /graphify-out/cache
+
+/tests/screenshots/out/

@@ -159,7 +159,7 @@ class ScannerService
             $message = $product->name;
         } elseif (! $user->hasAbility(Ability::DocumentsCreate)) {
             $result = 'rejected';
-            $message = 'Twoja rola nie może dodawać pozycji do dokumentów – użyj trybu „Sprawdź stan”';
+            $message = 'Twoja rola nie może dodawać pozycji do dokumentów – użyj trybu „Sprawdź”';
         } else {
             $document = $target ?? $this->currentTarget($user);
 

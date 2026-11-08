@@ -84,7 +84,7 @@ services:
       init:
         condition: service_completed_successfully
 
-  # nginx: jedyny port wystawiony na zewnątrz (HTTP + WebSocket)
+  # nginx: port aplikacji wystawiony na zewnątrz (HTTP + WebSocket)
   web:
     image: regal-wms-web
     build:

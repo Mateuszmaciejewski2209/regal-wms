@@ -159,8 +159,8 @@ export async function pairPhone(browser, email, deviceName) {
     await page.goto('/skaner');
     await page.locator('#pair-code').fill(code);
     await page.locator('#device-name').fill(deviceName);
-    // Limiter API skanera liczy żądania per adres IP (wspólnie z /pair: 10/min) – po serii skanów z tego samego
-    // hosta parowanie dostaje 429 „Too Many Attempts.”. Kod parowania pozostaje ważny, więc ponawiamy po przerwie.
+    // W pierwszej wersji limiter API skanera był wspólny z /pair i liczony per IP, więc po serii skanów parowanie
+    // dostawało 429 „Too Many Attempts.”. Błąd poprawiono; ponawianie po przerwie zostało jako zabezpieczenie.
     for (let attempt = 1; ; attempt++) {
         await page.getByRole('button', { name: 'Połącz' }).click();
         try {
