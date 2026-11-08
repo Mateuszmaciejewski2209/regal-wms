@@ -281,6 +281,8 @@ class Show extends Component
             $this->document = $documents->approve($this->document, auth()->user());
             $this->toast('Zatwierdzono', $this->document->number, 'success');
             $this->dispatch('scanner-target-changed');
+            // Tytuł z ->title() ustawia się tylko przy wejściu na stronę, więc po nadaniu numeru zmieniamy go w przeglądarce.
+            $this->js('document.title = '.json_encode($this->document->displayNumber().' · Regał WMS'));
         });
     }
 

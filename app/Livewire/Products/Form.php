@@ -5,6 +5,7 @@ namespace App\Livewire\Products;
 use App\Enums\Unit;
 use App\Models\Category;
 use App\Models\Product;
+use App\Rules\GtinCheckDigit;
 use App\Support\Num;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -61,7 +62,7 @@ class Form extends Component
 
         $data = $this->validate([
             'sku' => ['required', 'string', 'max:40', 'regex:/^[A-Za-z0-9._\-\/]+$/', Rule::unique('products', 'sku')->ignore($id)],
-            'ean' => ['nullable', 'string', 'regex:/^\d{8}$|^\d{12,14}$/', Rule::unique('products', 'ean')->ignore($id)],
+            'ean' => ['nullable', 'string', 'regex:/^\d{8}$|^\d{12,14}$/', new GtinCheckDigit, Rule::unique('products', 'ean')->ignore($id)],
             'name' => ['required', 'string', 'max:255'],
             'category_id' => ['nullable', Rule::exists('categories', 'id')],
             'unit' => ['required', Rule::enum(Unit::class)],

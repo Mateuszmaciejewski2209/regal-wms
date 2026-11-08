@@ -80,6 +80,12 @@ enum DocumentType: string
         return $this === self::PZ ? 'Dostawca' : 'Odbiorca';
     }
 
+    /** Biernik do podpowiedzi w polu wyboru: „Wybierz dostawcę…”. */
+    public function contractorAccusative(): string
+    {
+        return $this === self::PZ ? 'dostawcę' : 'odbiorcę';
+    }
+
     /** Klasa koloru dla odznaki (tokeny zdefiniowane w app.css). */
     public function tone(): string
     {

@@ -32,7 +32,7 @@
             @if ($docType->requiresContractor())
                 <x-ui.field :label="$docType->contractorLabel()" for="contractor_id" error="contractor_id" required class="sm:col-span-2">
                     <x-ui.select id="contractor_id" wire:model="contractor_id" :options="$contractorOptions" nullable searchable :invalid="$errors->has('contractor_id')"
-                                 :placeholder="'Wybierz '.mb_strtolower($docType->contractorLabel()).'…'" />
+                                 :placeholder="'Wybierz '.$docType->contractorAccusative().'…'" />
                     <p class="mt-1.5 text-[0.8125rem] text-ink-3">
                         Nie ma go na liście?
                         @can('contractors.manage')
