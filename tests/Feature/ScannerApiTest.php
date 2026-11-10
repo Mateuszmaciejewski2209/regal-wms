@@ -6,6 +6,7 @@ use App\Enums\DocumentType;
 use App\Models\Contractor;
 use App\Models\Document;
 use App\Models\Product;
+use App\Models\Role;
 use App\Models\ScannerDevice;
 use App\Models\User;
 use App\Models\Warehouse;
@@ -87,6 +88,44 @@ class ScannerApiTest extends TestCase
         $this->withToken($this->pairedToken())->postJson('/api/scanner/scans', ['code' => 'NIEZNANY'])
             ->assertOk()
             ->assertJsonPath('result', 'not_found');
+    }
+
+    public function test_manager_adds_new_product_from_unknown_ean_and_rescan_adds_it_to_document(): void
+    {
+        $this->user->update(['role_id' => Role::where('slug', 'manager')->value('id')]);
+        $token = $this->pairedToken();
+        $document = $this->draft();
+        $this->withToken($token)->postJson('/api/scanner/target', ['document_id' => $document->id])->assertOk();
+        $this->withToken($token)->getJson('/api/scanner/me')->assertJsonPath('user.can_manage_products', true);
+
+        $this->withToken($token)->postJson('/api/scanner/scans', ['code' => '4006381333931', 'document_id' => $document->id])
+            ->assertJsonPath('result', 'not_found');
+
+        $this->withToken($token)->postJson('/api/scanner/products', ['ean' => '4006381333931', 'name' => 'Kasa fiskalna', 'unit' => 'szt'])
+            ->assertCreated()
+            ->assertJsonPath('product.ean', '4006381333931');
+
+        $product = Product::where('ean', '4006381333931')->firstOrFail();
+        $this->assertMatchesRegularExpression('/^TW-\d{5}$/', $product->sku);
+
+        $this->withToken($token)->postJson('/api/scanner/scans', ['code' => '4006381333931', 'document_id' => $document->id])
+            ->assertJsonPath('result', 'added');
+        $this->assertDatabaseHas('document_items', ['document_id' => $document->id, 'product_id' => $product->id]);
+    }
+
+    public function test_new_product_from_scanner_requires_product_rights_and_valid_unique_ean(): void
+    {
+        $token = $this->pairedToken(); // magazynier: bez prawa do kartoteki
+        $this->withToken($token)->getJson('/api/scanner/me')->assertJsonPath('user.can_manage_products', false);
+        $this->withToken($token)->postJson('/api/scanner/products', ['ean' => '4006381333931', 'name' => 'Kasa', 'unit' => 'szt'])
+            ->assertForbidden();
+        $this->assertDatabaseMissing('products', ['ean' => '4006381333931']);
+
+        $this->user->update(['role_id' => Role::where('slug', 'manager')->value('id')]);
+        $this->withToken($token)->postJson('/api/scanner/products', ['ean' => '4006381333932', 'name' => 'Kasa', 'unit' => 'szt'])
+            ->assertUnprocessable()->assertJsonValidationErrors('ean'); // zła cyfra kontrolna
+        $this->withToken($token)->postJson('/api/scanner/products', ['ean' => '5901234123457', 'name' => 'Duplikat', 'unit' => 'szt'])
+            ->assertUnprocessable()->assertJsonValidationErrors('ean'); // kod już w kartotece
     }
 
     public function test_revoked_device_is_rejected(): void

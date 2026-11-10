@@ -147,6 +147,16 @@
                            placeholder="Zeskanuj lub wpisz kod i Enter…" enterkeyhint="done">
                 </div>
                 <p class="mt-1.5 text-xs text-ink-4">Czytnik USB działa jak klawiatura: QR etykiety, indeks lub EAN.</p>
+                @if ($unknownCode)
+                    <p class="mt-1.5 text-xs text-ink-3" role="status">
+                        Kodu <span class="code">{{ $unknownCode }}</span> nie ma w kartotece.
+                        @can('products.manage')
+                            <a href="{{ route('products.create', ['ean' => $unknownCode]) }}" wire:navigate class="font-medium text-ink underline underline-offset-2">Dodaj towar z tym kodem</a>
+                        @else
+                            Poproś kierownika o dodanie towaru.
+                        @endcan
+                    </p>
+                @endif
             </form>
 
             <div data-search class="relative">
@@ -411,12 +421,21 @@
             @endif
         </dl>
         @if ($shortages->isNotEmpty())
-            <p class="mt-3 rounded-lg bg-warn-soft p-2.5 text-[0.8125rem] text-ink-2">Uwaga: {{ Num::plural($shortages->count(), 'pozycja przekracza', 'pozycje przekraczają', 'pozycji przekracza') }} dostępny stan – zatwierdzenie zostanie odrzucone.</p>
+            {{-- Brak towaru: zamiast zatwierdzenia skazanego na odrzucenie pokazujemy, czego brakuje, a przycisk jest nieaktywny. --}}
+            <div class="mt-3 rounded-lg bg-danger-soft p-3 text-[0.8125rem] text-ink-2" role="alert">
+                <p class="font-medium text-ink">Nie można zatwierdzić: w magazynie {{ $doc->warehouse->code }} brakuje towaru.</p>
+                <ul class="mt-1.5 space-y-1">
+                    @foreach ($shortages as $item)
+                        <li><span class="font-medium text-ink">{{ $item->product->name }}</span>: dostępne {{ Num::qty($available[$item->product_id] ?? '0', $item->product->unit) }}, w dokumencie {{ Num::qty($item->quantity, $item->product->unit) }}</li>
+                    @endforeach
+                </ul>
+                <p class="mt-1.5">Zmniejsz ilość w dokumencie albo najpierw przyjmij brakujący towar.</p>
+            </div>
         @endif
-        <p class="mt-3 text-[0.8125rem] text-ink-3">Zatwierdzonego dokumentu nie można edytować – korekta tylko przez storno @cannot('documents.cancel')(wykonuje je kierownik)@endcannot.</p>
+        <p class="mt-3 text-[0.8125rem] text-ink-3">Zatwierdzonego dokumentu nie można edytować – korekta tylko przez {{ auth()->user()->can('documents.cancel') ? 'storno.' : 'storno (wykonuje je kierownik).' }}</p>
         <x-slot:footer>
             <x-ui.button variant="ghost" x-on:click="$wire.confirmApprove = false">Wróć</x-ui.button>
-            <x-ui.button variant="primary" icon="check" wire:click="approve">Zatwierdź</x-ui.button>
+            <x-ui.button variant="primary" icon="check" wire:click="approve" :disabled="$shortages->isNotEmpty()">Zatwierdź</x-ui.button>
         </x-slot:footer>
     </x-ui.modal>
 

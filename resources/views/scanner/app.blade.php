@@ -16,9 +16,11 @@
     @fonts
     @vite(['resources/css/app.css', 'resources/js/scanner.js'])
     <style>
-        /* Dolne 6rem zajmuje panel sterowania – dzięki temu środek obrazu pokrywa się ze środkiem celownika (pb-24). */
-        #reader { position: absolute; inset: 0 0 6rem 0; }
-        #reader video { width: 100% !important; height: 100% !important; object-fit: cover; }
+        /* Dolne 6rem zajmuje panel sterowania – dzięki temu środek obrazu pokrywa się ze środkiem celownika (pb-24).
+           !important: html5-qrcode przy starcie ustawia kontenerowi position: relative, a wtedy jego wysokość zależała
+           od proporcji strumienia i po powrocie do przeglądarki obraz zajmował tylko część ekranu. */
+        #reader { position: absolute !important; inset: 0 0 6rem 0; overflow: hidden; }
+        #reader video { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
         #reader > div, #reader img { display: none !important; }
         .safe-top { padding-top: max(env(safe-area-inset-top), 0.75rem); }
         .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0.75rem); }
@@ -207,6 +209,13 @@
                                             </span>
                                         </template>
                                     </div>
+                                    {{-- Nieznany kod EAN: nowy towar w dostawie --}}
+                                    <div class="mt-3" x-show="result.result === 'not_found' && isGtin(result.code)">
+                                        <button type="button" class="btn btn-primary h-11 w-full" x-show="canManageProducts" x-on:click="openNewProduct(result.code)">
+                                            <x-lucide-package-plus class="size-4" aria-hidden="true" />Dodaj nowy towar z tym kodem
+                                        </button>
+                                        <p class="text-[0.8125rem] text-ink-3" x-show="! canManageProducts">Nowy towar do kartoteki dodaje kierownik magazynu.</p>
+                                    </div>
                                 </div>
                             </template>
                         </div>
@@ -303,6 +312,36 @@
             <label for="manual" class="sr-only">Kod towaru</label>
             <input id="manual" x-ref="manual" x-model="manualCode" class="control h-12 font-mono text-lg" placeholder="Indeks, EAN lub RGL:…" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="send">
             <button type="submit" class="btn btn-primary mt-3 h-12 w-full text-base">Wyślij</button>
+        </form>
+
+        {{-- Nowy towar z nieznanym kodem EAN --}}
+        <form x-show="sheet === 'product'" class="space-y-3 px-4 pb-2" x-on:submit.prevent="saveNewProduct()" novalidate>
+            <div class="py-2">
+                <h2 class="text-base font-semibold">Nowy towar</h2>
+                <p class="text-[0.8125rem] text-ink-3">EAN <span class="code" x-text="productForm.code"></span></p>
+            </div>
+            <div>
+                <label for="product-name" class="label">Nazwa</label>
+                <input id="product-name" x-ref="productName" x-model="productForm.name" class="control h-12 text-base" maxlength="255" autocomplete="off" enterkeyhint="next" required>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label for="product-sku" class="label">Indeks</label>
+                    <input id="product-sku" x-model="productForm.sku" class="control h-12 font-mono" placeholder="automatycznie" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false">
+                </div>
+                <div>
+                    <label for="product-unit" class="label">Jednostka</label>
+                    <select id="product-unit" x-model="productForm.unit" class="control h-12">
+                        <template x-for="u in units" :key="u.value">
+                            <option :value="u.value" x-text="u.value + ' · ' + u.label"></option>
+                        </template>
+                    </select>
+                </div>
+            </div>
+            <p class="rounded-lg bg-danger-soft p-2.5 text-[0.8125rem] text-ink-2" x-show="productError" x-text="productError" role="alert"></p>
+            <button type="submit" class="btn btn-primary h-12 w-full text-base" :disabled="savingProduct"
+                    x-text="savingProduct ? 'Zapisuję…' : (mode === 'add' && target ? 'Zapisz i dodaj do dokumentu' : (mode === 'putaway' && location ? 'Zapisz i odłóż na półkę' : 'Zapisz w kartotece'))"></button>
+            <p class="text-xs text-ink-4">Cenę, kategorię i stan minimalny uzupełnisz później w kartotece w panelu.</p>
         </form>
 
         {{-- Menu / historia --}}

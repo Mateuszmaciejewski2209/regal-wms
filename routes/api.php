@@ -19,6 +19,7 @@ Route::prefix('scanner')->name('api.scanner.')->group(function () {
         Route::get('documents', [ScannerController::class, 'documents'])->name('documents');
         Route::post('target', [ScannerController::class, 'target'])->name('target');
         Route::post('scans', [ScannerController::class, 'scan'])->name('scans');
+        Route::post('products', [ScannerController::class, 'createProduct'])->name('products');
         Route::delete('session', [ScannerController::class, 'unpair'])->name('unpair');
     });
 });

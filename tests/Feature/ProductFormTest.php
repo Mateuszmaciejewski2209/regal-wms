@@ -33,4 +33,15 @@ class ProductFormTest extends TestCase
 
         $this->assertSame('5901234123457', Product::where('sku', 'TW-EAN01')->value('ean'));
     }
+
+    public function test_new_product_form_takes_ean_from_unknown_code_link(): void
+    {
+        $manager = User::factory()->create(['role_id' => Role::where('slug', 'manager')->value('id')]);
+
+        Livewire::withQueryParams(['ean' => '4006381333931'])->actingAs($manager)->test(Form::class)
+            ->assertSet('ean', '4006381333931');
+
+        Livewire::withQueryParams(['ean' => 'RGL:abc'])->actingAs($manager)->test(Form::class)
+            ->assertSet('ean', '');
+    }
 }

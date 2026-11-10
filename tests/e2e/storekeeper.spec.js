@@ -72,10 +72,11 @@ test.describe('Magazynier', () => {
 
         await page.getByRole('button', { name: 'Zatwierdź' }).first().click();
         const dialog = page.getByRole('dialog', { name: 'Zatwierdzić dokument?' });
-        await expect(dialog).toContainText('pozycja przekracza dostępny stan');
-        await dialog.getByRole('button', { name: 'Zatwierdź' }).click();
+        await expect(dialog).toContainText('Nie można zatwierdzić');
+        await expect(dialog).toContainText(/Drabina aluminiowa 3 × 8 stopni: dostępne .+, w dokumencie 50/);
+        await expect(dialog.getByRole('button', { name: 'Zatwierdź' })).toBeDisabled();
 
-        await expect(toast(page, /Niewystarczający stan towaru/)).toBeVisible();
+        await dialog.getByRole('button', { name: 'Wróć' }).click();
         await expect(page.getByRole('heading', { level: 1 })).toContainText('szkic');
     });
 

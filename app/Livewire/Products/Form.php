@@ -52,7 +52,10 @@ class Form extends Component
             $this->default_price = Num::input($product->default_price, 2);
             $this->description = (string) $product->description;
         } else {
-            $this->sku = $this->suggestSku();
+            $this->sku = Product::nextSku();
+            // Nieznany kod z czytnika w dokumencie: formularz od razu z tym kodem EAN.
+            $ean = (string) request()->query('ean', '');
+            $this->ean = preg_match('/^\d{8}$|^\d{12,14}$/', $ean) ? $ean : '';
         }
     }
 
@@ -106,16 +109,5 @@ class Form extends Component
             'categories' => Category::query()->orderBy('name')->get(['id', 'name']),
             'units' => Unit::cases(),
         ])->title($this->product ? 'Edycja: '.$this->product->name : 'Nowy towar');
-    }
-
-    private function suggestSku(): string
-    {
-        $next = (int) Product::query()->max('id') + 1;
-
-        do {
-            $sku = sprintf('TW-%05d', $next++);
-        } while (Product::query()->where('sku', $sku)->exists());
-
-        return $sku;
     }
 }

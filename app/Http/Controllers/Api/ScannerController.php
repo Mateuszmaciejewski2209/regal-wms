@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\Ability;
 use App\Enums\DocumentStatus;
+use App\Enums\Unit;
 use App\Exceptions\WarehouseException;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
+use App\Models\Product;
 use App\Models\ScannerDevice;
+use App\Rules\GtinCheckDigit;
 use App\Services\Scanner\ScannerService;
 use App\Support\Num;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 /**
  * API mobilnego skanera (PWA na telefonie).
@@ -49,10 +53,48 @@ class ScannerController extends Controller
 
         return response()->json([
             'device' => ['id' => $device->id, 'name' => $device->name],
-            'user' => ['name' => $device->user->name],
+            'user' => [
+                'name' => $device->user->name,
+                'can_manage_products' => $device->user->hasAbility(Ability::ProductsManage),
+            ],
+            'units' => collect(Unit::cases())->map(fn (Unit $unit) => ['value' => $unit->value, 'label' => $unit->label()])->all(),
             'target' => $target ? $this->scanner->documentSummary($target) : null,
             'server_time' => now()->toIso8601String(),
         ]);
+    }
+
+    /** POST /api/scanner/products – nowy towar z nieznanym kodem EAN zeskanowanym telefonem (np. przy przyjęciu dostawy). */
+    public function createProduct(Request $request): JsonResponse
+    {
+        if (! $this->device($request)->user->hasAbility(Ability::ProductsManage)) {
+            return response()->json(['message' => 'Twoja rola nie może dodawać towarów do kartoteki. Poproś kierownika magazynu.'], 403);
+        }
+
+        $data = $request->validate([
+            'ean' => ['required', 'string', 'regex:/^\d{8}$|^\d{12,14}$/', new GtinCheckDigit, Rule::unique('products', 'ean')],
+            'name' => ['required', 'string', 'max:255'],
+            'sku' => ['nullable', 'string', 'max:40', 'regex:/^[A-Za-z0-9._\-\/]+$/', Rule::unique('products', 'sku')],
+            'unit' => ['required', Rule::enum(Unit::class)],
+        ], [
+            'ean.regex' => 'EAN musi mieć 8 lub 12–14 cyfr.',
+            'ean.unique' => 'Towar z tym kodem EAN już jest w kartotece.',
+            'sku.regex' => 'Indeks może zawierać litery, cyfry oraz znaki . _ - /',
+            'sku.unique' => 'Taki indeks już istnieje.',
+        ]);
+
+        $product = Product::create([
+            'ean' => $data['ean'],
+            'name' => trim($data['name']),
+            'sku' => ($data['sku'] ?? '') !== '' ? $data['sku'] : Product::nextSku(),
+            'unit' => $data['unit'],
+            'min_stock' => '0',
+            'vat_rate' => 23,
+            'is_active' => true,
+        ]);
+
+        return response()->json([
+            'product' => ['id' => $product->id, 'sku' => $product->sku, 'name' => $product->name, 'ean' => $product->ean],
+        ], 201);
     }
 
     /** GET /api/scanner/documents – otwarte szkice, które można wybrać jako cel skanowania. */

@@ -75,6 +75,12 @@ window.scannerApp = () => ({
     secure: window.isSecureContext,
 
     reader: null,
+    cameraStopping: null,
+    canManageProducts: false, // prawo do kartoteki – nowy towar z nieznanego kodu EAN
+    units: [{ value: 'szt', label: 'sztuka' }],
+    productForm: { code: '', name: '', sku: '', unit: 'szt' },
+    productError: '',
+    savingProduct: false,
     armed: false, // „Skanuj” naciśnięte – przyjmujemy pierwszy kod z ramki
     armTimer: null,
     missed: false,
@@ -97,9 +103,16 @@ window.scannerApp = () => ({
         });
         window.addEventListener('offline', () => (this.online = false));
         document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible' && this.screen === 'scan') {
+            // Telefon wstrzymuje aparat, gdy przeglądarka jest w tle. Zwalniamy go sami, a po powrocie
+            // uruchamiamy czysty strumień – inaczej obraz zostawał czarny albo zajmował tylko część ekranu.
+            if (document.visibilityState === 'hidden') {
+                if (this.camera === 'running') this.stopCamera();
+                return;
+            }
+            if (this.screen === 'scan') {
                 this.requestWakeLock();
                 this.refreshMe();
+                this.startCamera((text) => this.onDecoded(text));
             }
         });
 
@@ -222,6 +235,8 @@ window.scannerApp = () => ({
             const me = await this.api('GET', '/api/scanner/me');
             this.target = me.target;
             this.device = { ...me.device, user: me.user.name };
+            this.canManageProducts = !!me.user.can_manage_products;
+            this.units = me.units ?? this.units;
             write(STORAGE.device, this.device);
         } catch {
             /* offline lub 401 – obsłużone w api() */
@@ -280,10 +295,13 @@ window.scannerApp = () => ({
             this.cameraMessage = 'Kamera wymaga połączenia HTTPS. Otwórz skaner przez tunel https:// lub użyj ręcznego wpisywania kodu.';
             return;
         }
+        if (this.cameraStopping) await this.cameraStopping;
         if (this.camera === 'running' || this.camera === 'starting') return;
 
         this.camera = 'starting';
         try {
+            // Czytnik w stanie innym niż „nie uruchomiony” (1) po nieudanym zatrzymaniu – nowy egzemplarz.
+            if (this.reader && this.reader.getState() !== 1) this.resetReader();
             this.reader ??= new Html5Qrcode('reader', {
                 verbose: false,
                 formatsToSupport: [F.QR_CODE, F.EAN_13, F.EAN_8, F.CODE_128, F.CODE_39, F.UPC_A, F.UPC_E, F.DATA_MATRIX],
@@ -303,6 +321,20 @@ window.scannerApp = () => ({
             } catch {
                 this.torchSupported = false;
             }
+
+            // Karta przełączona w trakcie uruchamiania – nie trzymamy aparatu w tle.
+            if (document.hidden) {
+                await this.stopCamera();
+                return;
+            }
+
+            // System może przerwać strumień (np. inna aplikacja zajęła aparat) – wtedy uruchamiamy go od nowa.
+            const track = document.querySelector('#reader video')?.srcObject?.getVideoTracks?.()[0];
+            track?.addEventListener('ended', async () => {
+                if (this.camera !== 'running' || document.hidden) return;
+                await this.stopCamera();
+                this.startCamera(onText);
+            });
         } catch (e) {
             const denied = /NotAllowed|Permission/i.test(String(e?.name ?? e));
             this.camera = denied ? 'denied' : 'error';
@@ -314,15 +346,26 @@ window.scannerApp = () => ({
 
     async stopCamera() {
         if (this.reader && this.camera === 'running') {
-            try {
-                await this.reader.stop();
-            } catch {
-                /* już zatrzymana */
-            }
+            this.cameraStopping = (async () => {
+                try {
+                    await this.reader.stop();
+                } catch {
+                    this.resetReader(); // html5-qrcode nie zatrzymał się czysto (np. tuż po starcie) – zaczynamy od zera
+                }
+            })();
+            await this.cameraStopping;
+            this.cameraStopping = null;
         }
         this.camera = 'idle';
         this.torchOn = false;
         this.armed = false;
+    },
+
+    /** Twarde zwolnienie aparatu: zatrzymanie ścieżek wideo, wyczyszczenie podglądu i nowy czytnik przy następnym starcie. */
+    resetReader() {
+        document.querySelectorAll('#reader video').forEach((video) => video.srcObject?.getTracks().forEach((track) => track.stop()));
+        document.getElementById('reader').innerHTML = '';
+        this.reader = null;
     },
 
     async toggleTorch() {
@@ -372,6 +415,44 @@ window.scannerApp = () => ({
 
     dismissResult() {
         this.result = null;
+    },
+
+    /** Kod w postaci EAN-8, UPC-A, EAN-13 lub GTIN-14 – tylko taki można zapisać w kartotece jako EAN. */
+    isGtin(code) {
+        return /^(\d{8}|\d{12,14})$/.test(String(code ?? ''));
+    },
+
+    openNewProduct(code) {
+        this.productForm = { code, name: '', sku: '', unit: this.units[0]?.value ?? 'szt' };
+        this.productError = '';
+        this.result = null;
+        this.sheet = 'product';
+        this.$nextTick(() => this.$refs.productName?.focus());
+    },
+
+    /** Zapis nowego towaru, a potem ponowny skan tego kodu: trafia do dokumentu, na półkę albo pokazuje stan. */
+    async saveNewProduct() {
+        if (!this.productForm.name.trim()) {
+            this.productError = 'Podaj nazwę towaru.';
+            return;
+        }
+
+        this.savingProduct = true;
+        this.productError = '';
+        try {
+            await this.api('POST', '/api/scanner/products', {
+                ean: this.productForm.code,
+                name: this.productForm.name,
+                sku: this.productForm.sku.trim(),
+                unit: this.productForm.unit,
+            });
+            this.sheet = null;
+            await this.submit(this.productForm.code);
+        } catch (e) {
+            this.productError = e instanceof ApiError ? e.message : 'Brak połączenia z serwerem. Spróbuj ponownie.';
+        } finally {
+            this.savingProduct = false;
+        }
     },
 
     /**

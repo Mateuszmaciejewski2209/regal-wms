@@ -104,6 +104,18 @@ class Product extends Model
             ->first();
     }
 
+    /** Kolejny wolny indeks w postaci TW-00001 (formularz kartoteki i nowy towar ze skanera). */
+    public static function nextSku(): string
+    {
+        $next = (int) static::query()->max('id') + 1;
+
+        do {
+            $sku = sprintf('TW-%05d', $next++);
+        } while (static::query()->where('sku', $sku)->exists());
+
+        return $sku;
+    }
+
     public function qrPayload(): string
     {
         return self::QR_PREFIX.$this->sku;

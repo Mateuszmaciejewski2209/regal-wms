@@ -30,6 +30,9 @@ class Show extends Component
     /** Pole czytnika kodów (czytnik USB działa jak klawiatura + Enter). */
     public string $code = '';
 
+    /** Ostatni zeskanowany czytnikiem kod EAN, którego nie ma w kartotece. */
+    public ?string $unknownCode = null;
+
     public string $productSearch = '';
 
     /** @var array<int, string> */
@@ -113,6 +116,9 @@ class Show extends Component
         }
 
         $result = $scanner->handleScan(auth()->user(), $code, '1', 'add', target: $this->document, source: 'keyboard');
+
+        // Nieznany kod EAN (nowy towar w dostawie) – widok podsuwa założenie towaru z tym kodem.
+        $this->unknownCode = $result['result'] === 'not_found' && preg_match('/^\d{8}$|^\d{12,14}$/', $code) ? $code : null;
 
         $this->toast(
             $result['product']['name'] ?? $code,
