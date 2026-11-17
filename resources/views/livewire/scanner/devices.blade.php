@@ -8,7 +8,7 @@
 
     {{-- Jak zacząć – kroki dla magazyniera --}}
     <section class="card mb-3 p-4" aria-label="Jak zacząć">
-        <ol class="grid gap-4 text-[0.8125rem] sm:grid-cols-4">
+        <ol class="grid gap-4 text-[0.8125rem] sm:grid-cols-2 lg:grid-cols-4">
             @foreach ([
                 ['qr-code', 'Sparuj telefon', 'Kliknij „Sparuj telefon” i zeskanuj kod aparatem telefonu.'],
                 ['file-plus-2', 'Wybierz dokument', 'W dokumencie kliknij „Podłącz skaner” albo wybierz dokument w telefonie.'],

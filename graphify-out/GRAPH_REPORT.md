@@ -1,7 +1,7 @@
-# Graph Report - magazyn-wms  (2026-11-10)
+# Graph Report - regal-wms  (2026-11-17)
 
 ## Corpus Check
-- 292 files · ~120,373 words
+- 292 files · ~120,377 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 35 file(s) not represented in the graph (top: (none) 19, .csv 10, .example 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e6deaea2`
+- Built from commit: `9b08a967`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -202,14 +202,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `Role i uprawnienia (RBAC)` --references--> `Ability`  [INFERRED]
   README.md → app/Enums/Ability.php
-- `Zależności od środowiska i bazy danych` --references--> `DocumentNumberGenerator`  [INFERRED]
-  tests/perf/README.md → app/Services/Documents/DocumentNumberGenerator.php
 - `Follow project naming conventions` --references--> `User`  [INFERRED]
   .claude/skills/laravel-best-practices/rules/style.md → app/Models/User.php
 - `Follow project naming conventions` --references--> `User`  [INFERRED]
   .junie/skills/laravel-best-practices/rules/style.md → app/Models/User.php
 - `Test class and methods` --references--> `TestCase`  [INFERRED]
   .claude/skills/testing-best-practices/rules/naming.md → tests/TestCase.php
+- `Global fakes` --references--> `TestCase`  [INFERRED]
+  .claude/skills/testing-best-practices/rules/performance.md → tests/TestCase.php
 
 ## Import Cycles
 - None detected.
@@ -757,7 +757,7 @@ Cohesion: 0.40
 Nodes (4): Data providers, Each test makes its own data, Factories and test data, Record construction
 
 ## Knowledge Gaps
-- **85 isolated node(s):** `toggleScanner`, `openHeader`, `prefill`, `addProduct`, `setCounted` (+80 more)
+- **85 isolated node(s):** `clearFilters`, `toggleScanner`, `openHeader`, `prefill`, `addProduct` (+80 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1193 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **90 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -765,16 +765,16 @@ Nodes (4): Data providers, Each test makes its own data, Factories and test data
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `User` connect `User` to `.addProduct`, `Convention and style best practices`, `Product`, `App\Models\User`, `ScannerDevice`, `Role`, `UserFactory.php`, `Documents/Show.php`, `Convention and style best practices`, `.canAssignRole`, `App\Models\Document`, `DocumentService`, `DocumentType`?**
-  _High betweenness centrality (0.144) - this node is a cross-community bridge._
-- **What connects `toggleScanner`, `openHeader`, `prefill` to the rest of the system?**
+  _High betweenness centrality (0.157) - this node is a cross-community bridge._
+- **What connects `clearFilters`, `toggleScanner`, `openHeader` to the rest of the system?**
   _85 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Illuminate\Database\Eloquent\Builder` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Why does `Metoda w skrócie` connect `scanner.js` to `.addProduct`, `Database performance best practices`?**
-  _High betweenness centrality (0.114) - this node is a cross-community bridge._
+  _High betweenness centrality (0.094) - this node is a cross-community bridge._
 - **Should `WebhookEvent` be split into smaller, more focused modules?**
   _Cohesion score 0.06767676767676768 - nodes in this community are weakly interconnected._
-- **Why does `Uwaga o limicie żądań` connect `Database performance best practices` to `scanner-figure.mjs`?**
+- **Why does `pairPhone()` connect `scanner-figure.mjs` to `m1-scan-latency.mjs`, `m4-offline-queue.mjs`, `common.mjs`, `m2-live-propagation.mjs`, `log`, `Database performance best practices`?**
   _High betweenness centrality (0.089) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06471631205673758 - nodes in this community are weakly interconnected._
